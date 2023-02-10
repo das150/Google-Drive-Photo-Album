@@ -17,7 +17,7 @@ Deploy the project as a web app so that anyone can execute it as you.
 Copy the web app's URL, and then add the following to the end:
 
 ```bash
-  # 2023y34ieng01 Januarymgjtjy34Klondike Derby
+  # [year]y34ieng[00 month]mgjtjy34[event name]
 ```
 
 This is the part of the URL that defines where to upload the photos. You can change the year, month (in 01 January format), and event name for each of your events. Duplicate folders will not be created!
