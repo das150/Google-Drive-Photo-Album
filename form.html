@@ -1,0 +1,173 @@
+<title>Upload Photos to the Album</title>
+<meta name="google-site-verification" content="..."/>
+<meta name="viewport" content="..."/>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<body>
+<style>
+input[type="file"] {
+    padding: 5px !important;
+    -webkit-appearance: none !important;
+}
+.myFile {
+    width: 225px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: darkgreen;
+    text-align: center;
+    background-color: lightgrey;
+    background-image: none;
+    border: 3px solid green;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+::-webkit-file-upload-button {
+  color: white;
+  font-size: 20px !important;
+  background-color: #3D9553;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 8px;
+  font-size: 11px;
+  margin-top: -3.5px;
+  font-weight: 950 !important;
+  margin-right: 15px;
+  line-height: 32px;
+  height: 31px;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0px 30px 10px; 20px;
+transition: 0.4s;
+-webkit-appearance: none !important;
+}
+::-webkit-file-upload-button:hover {
+  border-radius: 10px !important;
+  transition: 0.4s; opacity: 0.6;
+  background-color: #3D9553 !important;
+}
+/* for poor souls using IE */
+::-ms-browse {
+  color: black;
+  background-color: #2196f3;
+  font-family: 'Lato', sans-serif;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 2px;
+  font-size: 12px;
+  line-height: 32px;
+  height: 32px;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0 12px;
+}
+#sharebutton {
+  transition: 0.4s;
+  background-color: #d6d6d6; 
+  border-radius: 10px !important; 
+  margin-top: 10px; padding: 10px; 
+  -webkit-appearance: none !important;
+}
+#sharebutton:hover {
+  color: black !important; 
+  transition: 0.4s; 
+  box-shadow: 0px 0px 10px #888888;
+}
+</style>
+<div id="formcontainer" width="100%">
+  <div id="title" style="margin-left: 5px; margin-top: 50px; font-size: 50px; font-weight: 950 !important; font-family: arial !important;"></div>
+  <div style="color: #949494; margin-left: 5px; margin-top: 5px; font-family: arial;">On desktop, hold down ctrl to select multiple files</div>
+
+  <form id="myForm" target="_top" style="margin-top: 50px;"> 
+    <input type="file" style="color: #808080; -webkit-appearance: none !important;" name="filename" id="myFile" multiple><br>
+    <input type="button" value="Upload ➜" style="font-weight: 950; font-size: 20px; color: #3D9553
+; border: none; border-radius: 1000px; cursor: pointer; margin-left: 5px;" onclick="iteratorFileUpload();" id="sharebutton"><br>
+  </form>
+  
+  <div id="output"></div>
+  <b><div class="progress-label" style="margin-top: 60px; margin-left: 5px;"></div></b>
+  <div id="progressbar" style="margin-top: 8px; margin-left: 5px; height: 15px; width: 350px; border: none; border-radius: 110px;"></div>
+</div>
+
+<p id="hiddenkey" style="display: none;"></p><p id="mont" style="display: none;"></p><p id="yyyy" style="display: none;"></p><p id="butto" style="display: block;"></p>
+
+<script>
+var numUploads = {};
+numUploads.done = 0;
+numUploads.total = 0;
+
+function iteratorFileUpload() {
+    var allFiles = document.getElementById('myFile').files;
+
+    if (allFiles.length == 0) {
+        alert('Please select some files!');
+    } else {
+        numUploads.total = allFiles.length;
+        $('#progressbar').progressbar({
+        value : false
+        });
+        $(".progress-label").html('Preparing to upload');
+        for (var i = 0; i < allFiles.length; i++) {
+            console.log(i);
+            sendFileToDrive(allFiles[i]);
+        }
+    }
+}
+
+function sendFileToDrive(file) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var content = reader.result;
+        console.log('Sending ' + file.name);
+        var currFolder= document.getElementById("hiddenkey").textContent;
+        var month2= document.getElementById("mont").textContent;
+        var dear = document.getElementById("yyyy").textContent;
+        google.script.run.withSuccessHandler(updateProgressbar).uploadFileToDrive(content, file.name, currFolder, dear, month2);
+    }
+    reader.readAsDataURL(file);
+}
+
+function updateProgressbar( idUpdate ){
+   console.log('Received: ' + idUpdate);
+   numUploads.done++;
+   var porc = Math.ceil((numUploads.done / numUploads.total)*100);
+   $("#progressbar").progressbar({value: porc });
+   $(".progress-label").text(numUploads.done +'/'+ numUploads.total);
+   if( numUploads.done == numUploads.total ){
+       $(".progress-label").text('Uploading Complete!');
+       window.top.close();
+   };
+}
+</script>
+<script>
+  function fileUploaded(status) {
+    document.getElementById('progressbar').style.display = 'none';
+    document.getElementById('output').innerHTML = status;
+  }
+</script>
+<script>
+  google.script.url.getLocation(function(location) {
+    var hash= (location.hash);
+    var yh = hash.split("y34ieng", 1);
+    var myh = hash.replace(yh + "y34ieng", "");
+    var mont = myh.split("mgjtjy34", 1);
+    var titl = hash.replace(yh + "y34ieng" + mont + "mgjtjy34", "");
+    document.getElementById("yyyy").innerHTML = yh;
+    document.getElementById("title").innerHTML = titl;
+    document.getElementById("mont").innerHTML = mont;
+    document.getElementById("hiddenkey").innerHTML = titl;
+  });
+</script>
+</body>
