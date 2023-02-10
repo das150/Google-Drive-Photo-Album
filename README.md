@@ -1,7 +1,7 @@
 
 # Upload Photos to a Google Drive Album
 
-Code for a Google Drive photo album where any user can upload their photos/videos.
+Code for a Google Drive photo album where any user can upload their photos/videos **USING YOUR STORAGE**.
 
 
 
