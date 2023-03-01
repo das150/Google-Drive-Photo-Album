@@ -21,12 +21,3 @@ Copy the web app's URL, and then add the following to the end:
 ```
 
 This is the part of the URL that defines where to upload the photos. You can change the year, month (in 01 January format), and event name for each of your events. Duplicate folders will not be created!
-
-
-## Screenshots
-
-![Upload Form Screenshot](https://beeimg.com/images/u61522919002.png)
---
-![Upload Form Screenshot](https://beeimg.com/images/w04914176322.png)
---
-![Upload Form Screenshot](https://beeimg.com/images/z94395971672.png)
