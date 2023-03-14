@@ -20,4 +20,4 @@ Copy the web app's URL, and then add the following to the end:
   # [Year]y34ieng[00 Month]mgjtjy34[Event name]
 ```
 
-This is the part of the URL that defines where to upload the photos. You can change the year, month (in 01 January format), and event name for each of your events. Duplicate folders will not be created!
+This is the part of the URL that defines where to upload the photos. You can change the year (replace [Year]), month (in 01 January format), and event name for each of your events. Duplicate folders will not be created!
