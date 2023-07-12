@@ -1,7 +1,7 @@
 <title>Upload Photos to the Album</title>
 <meta name="google-site-verification" content="..."/>
 <meta name="viewport" content="..."/>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <body>
@@ -104,7 +104,7 @@ input[type="file"] {
 }
 </style>
     
-<div id="formcontainer" width="100%">
+<div id="formContainer" width="100%">
   <div id="eventTitle"></div>
   <div id="directions">On desktop, hold down ctrl to select multiple files</div>
 
@@ -118,7 +118,9 @@ input[type="file"] {
   <div id="progressBar"></div>
 </div>
 
-<p id="inputtedEvent" style="display: none;"></p><p id="inputtedMonth" style="display: none;"></p><p id="inputtedYear" style="display: none;"></p>
+<p id="inputtedEvent" style="display: none;"></p>
+<p id="inputtedMonth" style="display: none;"></p>
+<p id="inputtedYear" style="display: none;"></p>
 
 <script>
 var uploadCount = {};
@@ -129,13 +131,13 @@ function iteratorFileUpload() {
     var allFiles = document.getElementById('fileUpload').files;
 
     if (allFiles.length == 0) {
-        alert('Please select some files!');
+        alert('No files selected!');
     } else {
         uploadCount.total = allFiles.length;
-        $('#progressBar').progressBar({
-            value : false
+        $('#progressBar').progressbar({
+            value: false
         });
-        $(".progressLabel").html('Preparing to upload.');
+        $("#progressLabel").html('Preparing to upload.');
         for(var i = 0; i < allFiles.length; i++){
             sendFileToDrive(allFiles[i]);
         }
@@ -146,23 +148,23 @@ function sendFileToDrive(file) {
     var reader = new FileReader();
     reader.onload = function (e) {
         var content = reader.result;
-        console.log('Sending ' + file.name);
+        console.log('Sending: ' + file.name);
         var event = document.getElementById("inputtedEvent").textContent;
         var month = document.getElementById("inputtedMonth").textContent;
         var year = document.getElementById("inputtedYear").textContent;
-        google.script.run.withSuccessHandler(updateProgressbar).uploadFileToDrive(content, file.name, event, year, month);
+        google.script.run.withSuccessHandler(updateProgressBar).uploadFileToDrive(content, file.name, event, year, month);
     }
     reader.readAsDataURL(file);
 }
 
-function updateProgressbar(uploadedID){
+function updateProgressBar(uploadedID){
    console.log('Received: ' + uploadedID);
    uploadCount.done++;
    var calculatedProgress = Math.ceil((uploadCount.done / uploadCount.total)*100);
-   $("#progressBar").progressBar({value: calculatedProgres});
+   $("#progressBar").progressbar({value: calculatedProgress});
    $("#progressLabel").text(uploadCount.done +'/'+ uploadCount.total);
    if(uploadCount.done == uploadCount.total){
-       $(".progressLabel").text('Uploading Complete!');
+       $("#progressLabel").text('Uploading Complete!');
        window.top.close();
    };
 }
