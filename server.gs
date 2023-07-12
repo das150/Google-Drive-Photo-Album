@@ -37,7 +37,7 @@ function uploadFileToDrive(base64Data, fileName, event, year, month) {
     if (folders.hasNext()) {
       folder = folders.next();
     } else {
-      folder = monthFolder.createFolder(dropbox);
+      folder = monthFolder.createFolder(event);
     }
     var file = folder.createFile(photos);
 
