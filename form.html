@@ -1,73 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
 <title>Upload Photos to the Album</title>
 <meta name="google-site-verification" content="..."/>
 <meta name="viewport" content="..."/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<body>
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <!-- Google Fonts  -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 <style>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color: #5b97c7;
+}
+.container {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 34.37em;
+  position: relative;
+  margin: 3.12em auto;
+  padding: 3.12em 1.25em;
+  border-radius: 0.43em;
+  box-shadow: 0 1.25em 2.18em rgb(1, 28, 71, 0.3);
+}
 input[type="file"] {
-    color: #808080;
-    padding: 5px !important;
-    -webkit-appearance: none !important;
+  display: none;
 }
-::-webkit-file-upload-button {
-  color: white;
-  font-size: 20px !important;
-  background-color: #3D9553;
-  text-transform: uppercase;
-  border: 0;
-  border-radius: 8px;
-  font-size: 11px;
-  margin-top: -3.5px;
-  font-weight: 950 !important;
-  margin-right: 15px;
-  line-height: 32px;
-  height: 31px;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  white-space: nowrap;
-  padding: 0px 30px 10px; 20px;
-  transition: 0.4s;
-  -webkit-appearance: none !important;
-}
-::-webkit-file-upload-button:hover {
+label:hover {
   border-radius: 10px !important;
-  transition: 0.4s; opacity: 0.6;
-  background-color: #3D9553 !important;
+  transition: 0.5s; opacity: 0.6;
+
 }
-::-ms-browse {
-  color: black;
-  background-color: #2196f3;
-  font-family: 'Lato', sans-serif;
-  text-transform: uppercase;
-  border: 0;
-  border-radius: 2px;
-  font-size: 12px;
-  line-height: 32px;
-  height: 32px;
-  font-weight: normal;
+label {
+  display: block;
+  position: relative;
+  background-color: #025bee;
+  color: #ffffff;
+  font-size: 1.12em;
+  font-weight: 500;
   text-align: center;
-  vertical-align: middle;
+  width: 18.75em;
+  padding: 1.12em 0;
+  margin: auto;
+  border-radius: 0.31em;
   cursor: pointer;
-  white-space: nowrap;
-  padding: 0 12px;
+}
+#num-of-files {
+  font-weight: 400;
+  text-align: center;
+  margin: 1.25em 0 1.87em 0;
+}
+ul {
+  list-style-type: none;
+}
+.container li {
+  font-weight: 500;
+  background-color: #eff5ff;
+  color: #025bee;
+  margin-bottom: 1em;
+  padding: 1.1em 1em;
+  border-radius: 0.3em;
+  display: flex;
+  justify-content: space-between;
 }
 #shareButton {
+  display: block;
+  position: relative;
   font-weight: 950;
-  font-size: 20px;
-  color: #3D9553; 
+  font-size: 1.12em;
+  width: 18.75em;
+  padding: 1.12em 0;
+  color: #025bee; 
   border: none;
   cursor: pointer;
-  margin-left: 5px;
   transition: 0.4s;
-  background-color: #d6d6d6; 
-  border-radius: 10px !important; 
-  margin-top: 10px;
-  padding: 10px; 
-  -webkit-appearance: none !important;
+  border-radius: 6px !important; 
+  padding: 12px;
+  padding-left: 45px; 
+  padding-right: 45px;
+  margin-top: 10px !important;
+  text-align: center;
+  margin: auto;
 }
 #shareButton:hover {
   color: black !important; 
@@ -75,53 +103,94 @@ input[type="file"] {
   box-shadow: 0px 0px 10px #888888;
 }
 #eventTitle {
-    margin-left: 5px;
-    margin-top: 50px;
+    text-align: center;
     font-size: 50px;
-    font-weight: 950 !important;
-    font-family: arial !important;
+    font-weight: 700 !important;
 }
 #directions {
-   color: #949494;
+    text-align: center;
+    color: #595757;
+    font-size: 14px;
     margin-left: 5px;
     margin-top: 5px;
-    font-family: arial; 
-}
-#uploadForm {
-    margin-top: 50px;
+    margin-bottom: 0px;
+
 }
 #progressLabel {
-    margin-top: 60px;
+    text-align: center;
+    color: #595757;
+    font-size: 14px;
     margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 0px;
 }
 #progressBar {
-    margin-top: 8px;
-    margin-left: 5px;
+    display: none;
     height: 15px;
-    width: 350px;
+    width: 100%;
     border: none;
-    border-radius: 110px;
+    background: #025bee;
+}
+#barrier {
+   color: #3176ad;
+   font-size: 900;
+   text-align: center;
+   margin: 15px;
 }
 </style>
-    
-<div id="formContainer" width="100%">
-  <div id="eventTitle"></div>
-  <div id="directions">On desktop, hold down ctrl to select multiple files</div>
+  <body>
 
   <form id="uploadForm" target="_top"> 
-    <input type="file" name="filename" id="fileUpload" multiple><br>
-    <input type="button" value="Upload ➜" id="shareButton" onclick="iteratorFileUpload();"><br>
-  </form>
-  
+    <div class="container">
+  <div id="eventTitle">Loading...</div>
+  <div id="directions">Hold <b>ctrl</b> to select multiple files</div>
   <div id="output"></div>
-  <b><div id="progressLabel"></div></b>
+  <div id="progressLabel"></div>
   <div id="progressBar"></div>
-</div>
+  <div id="barrier">---------</div>
+
+      <input type="file" id="fileUpload" multiple />
+      <label for="fileUpload">
+        <i class=" 	fas fa-cloud-upload-alt"></i>
+        &nbsp; Choose Files
+      </label>
+
+    <input type="button" value="Upload ➜" id="shareButton" onclick="iteratorFileUpload();">
+
+      <div id="num-of-files">No files selected</div>
+
+    <ul id="files-list"></ul>
+
+    </div></form>
 
 <p id="inputtedEvent" style="display: none;"></p>
 <p id="inputtedMonth" style="display: none;"></p>
 <p id="inputtedYear" style="display: none;"></p>
+    <!-- Script -->
+    <script>let fileInput = document.getElementById("fileUpload");
+let fileList = document.getElementById("files-list");
+let numOfFiles = document.getElementById("num-of-files");
 
+fileInput.addEventListener("change", () => {
+  fileList.innerHTML = "";
+  numOfFiles.textContent = `${fileInput.files.length} files selected`;
+  if (fileInput.files.length == 1){
+    numOfFiles.textContent = `1 file selected`;
+  }
+
+  for (i of fileInput.files) {
+    let reader = new FileReader();
+    let listItem = document.createElement("li");
+    let fileName = i.name;
+    let fileSize = (i.size / 1024).toFixed(1);
+    listItem.innerHTML = `<p>${fileName}</p><p>${fileSize}KB</p>`;
+    if (fileSize >= 1024) {
+      fileSize = (fileSize / 1024).toFixed(1);
+      listItem.innerHTML = `<p>${fileName}</p><p>${fileSize}MB</p>`;
+    }
+    fileList.appendChild(listItem);
+  }
+});</script>
 <script>
 var uploadCount = {};
 uploadCount.done = 0;
@@ -133,18 +202,35 @@ function iteratorFileUpload() {
     if (allFiles.length == 0) {
         alert('No files selected!');
     } else {
+        document.getElementById('directions').display = "none";
+        document.getElementById('progressBar').display = "block !important";
         uploadCount.total = allFiles.length;
         $('#progressBar').progressbar({
             value: false
         });
-        $("#progressLabel").html('Preparing to upload.');
-        for(var i = 0; i < allFiles.length; i++){
-            sendFileToDrive(allFiles[i]);
-        }
+        $("#progressLabel").html('Finding folders...');
+        findFolder();
     }
 }
 
-function sendFileToDrive(file) {
+function findFolder() {
+    var event = document.getElementById("inputtedEvent").textContent;
+    var month = document.getElementById("inputtedMonth").textContent;
+    var year = document.getElementById("inputtedYear").textContent;
+    google.script.run.withSuccessHandler(onFolderReceived).getEventFolder(event, year, month);
+}
+
+function onFolderReceived(folderId) {
+  var allFiles = document.getElementById('fileUpload').files;
+      console.log('Folder ID:', folderId);
+      var folderIdToUse = folderId;
+      $("#progressLabel").html('Preparing files for upload...');
+        for(var i = 0; i < allFiles.length; i++){
+            sendFileToDrive(folderIdToUse, allFiles[i]);
+        }
+}
+
+function sendFileToDrive(folderIdToUse, file) {
     var reader = new FileReader();
     reader.onload = function (e) {
         var content = reader.result;
@@ -152,12 +238,13 @@ function sendFileToDrive(file) {
         var event = document.getElementById("inputtedEvent").textContent;
         var month = document.getElementById("inputtedMonth").textContent;
         var year = document.getElementById("inputtedYear").textContent;
-        google.script.run.withSuccessHandler(updateProgressBar).uploadFileToDrive(content, file.name, event, year, month);
+        google.script.run.withSuccessHandler(updateProgressBar).uploadFileToDrive(folderIdToUse, content, file.name);
     }
     reader.readAsDataURL(file);
 }
 
 function updateProgressBar(uploadedID){
+   document.getElementById('progressBar').style.display = 'block !important';
    console.log('Received: ' + uploadedID);
    uploadCount.done++;
    var calculatedProgress = Math.ceil((uploadCount.done / uploadCount.total)*100);
@@ -165,13 +252,17 @@ function updateProgressBar(uploadedID){
    $("#progressLabel").text(uploadCount.done +'/'+ uploadCount.total);
    if(uploadCount.done == uploadCount.total){
        $("#progressLabel").text('Uploading Complete!');
+       document.getElementById("num-of-files").innerHTML = "No Files Selected";
+       document.getElementById("files-list").innerHTML = "";
+       uploadCount.done = 0;
+       document.getElementById('fileUpload').value = null;
        window.top.close();
    };
 }
 </script>
 <script>
 function fileUploaded(status) {
-  document.getElementById('progressBar').style.display = 'none';
+  document.getElementById('progressBar').style.display = 'block !important';
   document.getElementById('output').innerHTML = status;
 }
 </script>
@@ -188,4 +279,5 @@ google.script.url.getLocation(function(location) {
   document.getElementById("inputtedEvent").innerHTML = nameHash;
 });
 </script>
-</body>
+  </body>
+</html>
