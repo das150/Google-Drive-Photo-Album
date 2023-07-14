@@ -118,7 +118,7 @@ ul {
 }
 #progressLabel {
     text-align: center;
-    color: #595757;
+    color: #025bee;
     font-size: 14px;
     margin-left: 5px;
     margin-top: 5px;
@@ -144,8 +144,8 @@ ul {
     <div class="container">
   <div id="eventTitle">Loading...</div>
   <div id="directions">Hold <b>ctrl</b> to select multiple files</div>
-  <div id="output"></div>
-  <div id="progressLabel"></div>
+  <b><div id="output"></div>
+  <div id="progressLabel"></div></b>
   <div id="progressBar"></div>
   <div id="barrier">---------</div>
 
@@ -205,6 +205,11 @@ function iteratorFileUpload() {
         document.getElementById('directions').display = "none";
         document.getElementById('progressBar').display = "block !important";
         uploadCount.total = allFiles.length;
+        $('label[for="fileUpload"]').text('Uploading...');
+        $('label[for="fileUpload"]').on('click', function(event) {
+    event.preventDefault();
+  });
+       $("#shareButton").hide();
         $('#progressBar').progressbar({
             value: false
         });
@@ -250,8 +255,13 @@ function updateProgressBar(uploadedID){
    var calculatedProgress = Math.ceil((uploadCount.done / uploadCount.total)*100);
    $("#progressBar").progressbar({value: calculatedProgress});
    $("#progressLabel").text(uploadCount.done +'/'+ uploadCount.total);
+   $('ul li:nth-child(' + uploadCount.done + ')').css('color', '#076f21')
+   $('ul li:nth-child(' + uploadCount.done + ')').css('background-color', '#e1fbe6')
    if(uploadCount.done == uploadCount.total){
        $("#progressLabel").text('Uploading Complete!');
+       $("#shareButton").slideDown(1200);
+       $('label[for="fileUpload"]').html('<i class="fas fa-cloud-upload-alt"></i>&nbsp; Choose Files');
+       $('label[for="fileUpload"]').off('click');
        document.getElementById("num-of-files").innerHTML = "No Files Selected";
        document.getElementById("files-list").innerHTML = "";
        uploadCount.done = 0;
