@@ -5,41 +5,38 @@ function doGet() {
 }
 
 function getEventFolder(event, year, month) {
-    try{
-
+  try {
     var yearFolder, yearFolders = DriveApp.getFoldersByName(year);
     if (yearFolders.hasNext()) {
       yearFolder = yearFolders.next();
     } else {
       yearFolder = DriveApp.getFolderById('ALBUMFOLDERIDGOESHERE').createFolder(year);
     }
-    var yearFolderCode = DriveApp.getFoldersByName(year).next().getId();
-    var yearFolderID = DriveApp.getFolderById(yearFolderCode);
+    var yearFolderCode = yearFolder.getId();
     
-    var monthFolder, monthFolders = yearFolderID.getFoldersByName(month);
+    var monthFolder, monthFolders = yearFolder.getFoldersByName(month);
     if (monthFolders.hasNext()) {
       monthFolder = monthFolders.next();
     } else {
-      monthFolder = yearFolderID.createFolder(month);
+      monthFolder = yearFolder.createFolder(month);
     }
-    var monthFolderCode = yearFolder.getFoldersByName(month).next().getId();
-    var monthFolderID = DriveApp.getFolderById(monthFolderCode);
+    var monthFolderCode = monthFolder.getId();
     
     var eventName = event;
-    var folder, folders = monthFolderID.getFoldersByName(eventName);
+    var folder, folders = monthFolder.getFoldersByName(eventName);
     if (folders.hasNext()) {
       folder = folders.next();
     } else {
       folder = monthFolder.createFolder(event);
     }
-    var eventFolderID = monthFolder.getFoldersByName(eventName).next().getId();
-    // var eventFolderID = DriveApp.getFolderById(eventFolderCode);
-    return eventFolderID;
+    var eventFolderID = folder.getId();
     
-  }catch(e){
-    return 'Error: ' + e.toString();
+    return eventFolderID;
+  } catch (e) {
+    return 'GF Error: ' + e.toString();
   }
 }
+
 
 function uploadFileToDrive(folderIdToUse, base64Data, fileName) {
   try{
